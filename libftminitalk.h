@@ -1,14 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libftminitalk.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/26 15:29:19 by tkulket           #+#    #+#             */
+/*   Updated: 2023/04/26 15:30:40 by tkulket          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef __MINITALK_H__
-# define __MINITALK_H__
+#ifndef __LIBFTMINITALK__
+# define __LIBFTMINITALK__
 
-#define WAITTIME 500
+# define WAITTIME 500
 
-# include <signal.h>
-//# include <sys/type.h>
-# include <sys/wait.h>
 # include "ft_printf/libftprintf.h"
 
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <errno.h>
+# include <sys/stat.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <time.h>
 
 
 
