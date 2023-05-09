@@ -6,7 +6,7 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 19:44:04 by tkulket           #+#    #+#             */
-/*   Updated: 2023/02/04 02:13:46 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/04/26 17:54:26 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdio.h>
 # include <stdint.h>
 # include <limits.h>
-# include <error.h>
+//# include <error.h>
 
 typedef struct s_list
 {

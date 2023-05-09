@@ -6,7 +6,7 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:27:45 by tkulket           #+#    #+#             */
-/*   Updated: 2023/04/26 15:28:07 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/04/26 17:51:55 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int data;  // global variable to store transmitted data
 
 void send_message(int pid, char *message, int flag1, int flag2, int flag3) {
     strcpy((char *)&data, message);
-    data = (data & ~FLAG_BIT(0)) | (flag1 << 0);
-    data = (data & ~FLAG_BIT(1)) | (flag2 << 1);
-    data = (data & ~FLAG_BIT(2)) | (flag3 << 2);
+	sleep(1);
     kill(pid, SIGUSR1);
 }
 
@@ -49,7 +47,7 @@ int main(int argc, char *argv[]) {
     struct sigaction sa;
     sa.sa_handler = sig_handler;
     sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
+    sa.sa_flags = SA_RESTART;
     if (sigaction(SIGUSR1, &sa, NULL) == -1) {
         perror("sigaction");
         exit(1);
@@ -58,6 +56,7 @@ int main(int argc, char *argv[]) {
     send_message(pid, message, flag1, flag2, flag3);
     printf("Sender: Waiting for signal confirmation\n");
     while (1) {
+		sleep(1);
         pause();
     }
 

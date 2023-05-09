@@ -6,7 +6,7 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:28:34 by tkulket           #+#    #+#             */
-/*   Updated: 2023/04/26 15:28:37 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/04/26 17:51:57 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ void sig_handler(int signum) {
         char message[256];
         int flag1, flag2, flag3;
         strcpy(message, (char *)&data);
-        flag1 = (data >> 0) & 1;
-        flag2 = (data >> 1) & 1;
-        flag3 = (data >> 2) & 1;
         printf("Receiver: Message received: %s, flags: %d %d %d\n", message, flag1, flag2, flag3);
-        kill(getpid(), SIGUSR1);  // send confirmation signal back to sender
+        sleep(1);
+		kill(getpid(), SIGUSR1);  // send confirmation signal back to sender
     }
 }
 
@@ -37,14 +35,16 @@ int main() {
     struct sigaction sa;
     sa.sa_handler = sig_handler;
     sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
+    sa.sa_flags = SA_RESTART;
     if (sigaction(SIGUSR1, &sa, NULL) == -1) {
         perror("sigaction");
         exit(1);
     }
 
+	printf("PID : %d \n",getpid());
     printf("Receiver: Waiting for message\n");
     while (1) {
+		sleep(1);
         pause();
     }
 
