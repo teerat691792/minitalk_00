@@ -6,15 +6,65 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:27:45 by tkulket           #+#    #+#             */
-/*   Updated: 2023/04/26 17:51:55 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/05/10 20:03:45 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <signal.h>
+#include "libftminitalk.h"
+
+void	ft_bit(int c);
+
+int	main(void)
+{
+	int	j;
+	int	k;
+	int	l;
+
+	j = 106;
+	k = 107;
+	l = 108;
+	ft_bit(j);
+	ft_bit(k);
+	ft_bit(l);
+	ft_bit('a');
+	ft_bit('b');
+	ft_bit(0);
+	ft_bit(1);
+	ft_bit(128);
+	ft_bit((1 << 1));
+	ft_bit((1 << 2));
+	ft_bit((1 << 3));
+	ft_bit((1 << 4));
+	ft_bit((1 << 5));
+	ft_bit((1 << 6));
+	ft_bit((1 << 7));
+	return (0);
+}
+
+void	ft_bit(int c)
+{
+	int	count;
+
+	printf("char =	%c\n", c);
+	printf("int  =	%d\n", c);
+	printf("Hex  =	%X\n", c);
+	printf("bin  =	");
+	count = 8;
+	while (count != 0)
+	{
+		if (c & (1 << (count - 1)))
+			printf("1");
+		else
+			printf("0");
+		count--;
+		if (count == 4)
+			printf(" ");
+	}
+	printf("\n");
+	printf("*********************\n");
+}
+
+/*
 
 #define FLAG_BIT(n) (1 << n)
 
@@ -63,3 +113,4 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+*/

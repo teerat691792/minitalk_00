@@ -6,19 +6,15 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:26:37 by tkulket           #+#    #+#             */
-/*   Updated: 2023/05/09 23:40:46 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/05/10 19:41:22 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftminitalk.h"
 
-typedef struct s_var 
-{
-	char			c;
-	int 	count;
-} t_var;
-
 t_var g_var;
+
+//ideal server : signal_01 --> bit --> hex --> char --> prints
 
 void	ft_handler(int signum, siginfo_t *info, void *ucontext)
 {
@@ -28,19 +24,21 @@ void	ft_handler(int signum, siginfo_t *info, void *ucontext)
 	{
 		g_var.c |= 1;
 		g_var.c = g_var.c << 1;
-		printf("sig 1 == count %d\n",g_var.count);
+		write(1, &g_var.c, 1);
+		printf("\nsig 1 == count %d\n",g_var.count);
 	}
 	else if (signum == SIGUSR2)
 	{
 		g_var.c = g_var.c << 1;
-		printf("sig 2 == count %d\n",g_var.count);
+		write(1, &g_var.c, 1);
+		printf("\nsig 2 == count %d\n",g_var.count);
 	}
 	g_var.count++;
 	if (g_var.count == 8)
 	{
+		printf("\n\n");
 		write(1, &g_var.c, 1);
-		printf("\n ascii == %d\n",g_var.c);
-		write(1, "\nvar printed\n", 13);
+		printf("\nascii == %d\n",g_var.c);
 		g_var.count = 0;
 		g_var.c = g_var.c << 8;
 		printf("\nPID =  %d\n",getpid());

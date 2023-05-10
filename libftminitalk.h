@@ -6,7 +6,7 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:29:19 by tkulket           #+#    #+#             */
-/*   Updated: 2023/04/26 15:30:40 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/05/10 19:36:11 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@
 # include <fcntl.h>
 # include <time.h>
 
+typedef	struct s_var
+{
+	char		c;
+	int		count;
+	char	hex;
+	char	*bit;
+	char	*str;
+}	t_var;
 
 
 
