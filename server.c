@@ -6,7 +6,7 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:26:37 by tkulket           #+#    #+#             */
-/*   Updated: 2023/05/10 19:41:22 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/05/10 22:06:34 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	ft_handler(int signum, siginfo_t *info, void *ucontext)
 	{
 		g_var.c |= 1;
 		g_var.c = g_var.c << 1;
-		write(1, &g_var.c, 1);
-		printf("\nsig 1 == count %d\n",g_var.count);
+		printf("%s	", &g_var.c);
+		printf("sig 1 == count %d\n",g_var.count);
 	}
 	else if (signum == SIGUSR2)
 	{
 		g_var.c = g_var.c << 1;
-		write(1, &g_var.c, 1);
-		printf("\nsig 2 == count %d\n",g_var.count);
+		printf("%s	", &g_var.c);
+		printf("sig 2 == count %d\n",g_var.count);
 	}
 	g_var.count++;
 	if (g_var.count == 8)
@@ -41,7 +41,7 @@ void	ft_handler(int signum, siginfo_t *info, void *ucontext)
 		printf("\nascii == %d\n",g_var.c);
 		g_var.count = 0;
 		g_var.c = g_var.c << 8;
-		printf("\nPID =  %d\n",getpid());
+		printf("\nPID =  %d\n\n",getpid());
 	}
 	usleep(100);
 }
@@ -58,63 +58,8 @@ int	main(void)
 	sigaction(SIGUSR2, &sa, NULL);
 	pid = getpid();
 	printf("server PID : %d\n", pid);
-//	signal(SIGUSR1, &ft_handler);
 	sleep(1);
 	while (1)
 		pause();
-	printf("signal recieved\n");
 	return (0);
 }
-
-/*
-#define FLAG_BIT(n) (1 << n)
-
-int data;  // global variable to store received data
-
-void sig_handler(int signum) {
-    if (signum == SIGUSR1) {
-        char message[256];
-        strcpy(message, (char *)&data);
-        flag1 = (data >> 0) & 1;
-        flag2 = (data >> 1) & 1;
-        flag3 = (data >> 2) & 1;
-        printf("Receiver: Message received: %s", message);
-        printf(", flags: %d %d %d\n", flag1, flag2, flag3);
-		sleep(1);
-        kill(getpid(), SIGUSR1);  // send confirmation signal back to sender
-    }
-}
-
-int main() {
-    struct sigaction sa;
-    sa.sa_handler = sig_handler;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    if (sigaction(SIGUSR1, &sa, NULL) == -1) {
-        perror("sigaction");
-        exit(1);
-    }
-
-
-	printf("server PID : %d\n",getpid());
-    printf("Receiver: Waiting for message\n");
-    while (1) {
-        pause();
-    }
-
-    return 0;
-}
-*/
-/*
-#include "libftminitalk.h"
-
-int main(void)
-{
-		pid_t	pid;
-
-		pid = getpid();
-		ft_printf("		server PID = %d\n",pid);
-		return (0);
-}
-
-*/

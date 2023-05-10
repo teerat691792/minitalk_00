@@ -6,15 +6,85 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:27:45 by tkulket           #+#    #+#             */
-/*   Updated: 2023/05/10 20:03:45 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/05/10 22:40:52 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftminitalk.h"
 
-void	ft_bit(int c);
+char	*str;
 
-int	main(void)
+void	ft_bit(int c);
+void	ft_testbit(void);
+void	ft_sendbit(int pid, char *str);
+
+int main(int argc, char	**argv)
+{
+	int		pid;
+	int		len;
+	int		i;
+
+	if (argc != 3)
+	{
+		printf("Please input following : ./sender.out {PID} {string}\n");
+		return (1);
+	}
+	else
+	{
+		pid = atoi(argv[1]);
+		str = strdup(argv[2]);
+
+		len = strlen(str);
+		printf("str	=	%s\n",	str);
+		printf("len	=	%d\n",	len);
+		i = 0;
+		while (str[i] != '\0')
+		{
+			ft_bit(str[i]);	
+			i++;
+		}
+
+		ft_sendbit(pid, str);
+		return (0);
+	}
+}
+
+void	ft_sendbit(int pid, char *str)
+{
+	size_t	len;
+	size_t	j;
+	size_t	i;
+
+	printf("\n");
+	i = 0;
+	len = strlen(str);
+	while (i < len)
+	{
+		j = 8;
+		while (j > 0)
+		{
+			if (str[i] & (1 << (j - 1)))
+			{
+				printf("1");
+				kill(pid, SIGUSR1);
+			}
+			else
+			{
+				printf("0");
+				kill(pid, SIGUSR2);
+			}
+			usleep(200);
+			j--;
+			if (j == 4)
+				printf(" ");
+		}
+		printf("\n");
+		i++;
+	}
+	printf("\n");
+}
+
+void	ft_testbit(void)
 {
 	int	j;
 	int	k;
@@ -38,7 +108,6 @@ int	main(void)
 	ft_bit((1 << 5));
 	ft_bit((1 << 6));
 	ft_bit((1 << 7));
-	return (0);
 }
 
 void	ft_bit(int c)
