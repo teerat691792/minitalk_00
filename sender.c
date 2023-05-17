@@ -6,7 +6,7 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:27:45 by tkulket           #+#    #+#             */
-/*   Updated: 2023/05/10 22:40:52 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:31:09 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_sendbit(int pid, char *str);
 int main(int argc, char	**argv)
 {
 	int		pid;
-	int		len;
+//	int		len;
 	int		i;
 
 	if (argc != 3)
@@ -32,19 +32,19 @@ int main(int argc, char	**argv)
 	else
 	{
 		pid = atoi(argv[1]);
-		str = strdup(argv[2]);
-
-		len = strlen(str);
-		printf("str	=	%s\n",	str);
-		printf("len	=	%d\n",	len);
+//		str = strdup(argv[2]);
+//		len = strlen(str);
+//		printf("str	=	%s\n",	str);
+//		printf("len	=	%d\n",	len);
+		str =  argv[2];
 		i = 0;
 		while (str[i] != '\0')
 		{
 			ft_bit(str[i]);	
 			i++;
 		}
-
 		ft_sendbit(pid, str);
+//		free(str);
 		return (0);
 	}
 }
@@ -55,7 +55,7 @@ void	ft_sendbit(int pid, char *str)
 	size_t	j;
 	size_t	i;
 
-	printf("\n");
+//	printf("\n");
 	i = 0;
 	len = strlen(str);
 	while (i < len)
@@ -65,23 +65,25 @@ void	ft_sendbit(int pid, char *str)
 		{
 			if (str[i] & (1 << (j - 1)))
 			{
-				printf("1");
-				kill(pid, SIGUSR1);
+//				printf("1");
+				if (kill(pid, SIGUSR1) == -1)
+					write(1,"SENDING SIGUSR1 ERROR\n", 22);
 			}
 			else
 			{
-				printf("0");
-				kill(pid, SIGUSR2);
+//				printf("0");
+				if (kill(pid, SIGUSR2) == -1)
+					write(1,"SENDING SIGUSR2 ERROR\n", 22);
 			}
 			usleep(200);
 			j--;
-			if (j == 4)
-				printf(" ");
+//			if (j == 4)
+//				printf(" ");
 		}
-		printf("\n");
+//		printf("\n");
 		i++;
 	}
-	printf("\n");
+//	printf("\n");
 }
 
 void	ft_testbit(void)

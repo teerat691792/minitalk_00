@@ -6,25 +6,15 @@
 #    By: tkulket <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 17:52:10 by tkulket           #+#    #+#              #
-#    Updated: 2023/05/10 18:28:22 by tkulket          ###   ########.fr        #
+#    Updated: 2023/05/17 07:46:33 by tkulket          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAG	=	-Wall -Werror -Wextra
+FLAG	=	-Wall -Werror -Wextra -g
 
 NAME 	= libftminitalk.a
 
-SRC		=	ft_printf/ft_printf.c\
-			ft_printf/ft_utils.c\
-			ft_printf/libft/ft_strlen.c\
-			ft_printf/libft/ft_putchar.c\
-			ft_printf/libft/ft_itoa.c\
-			ft_printf/libft/ft_utoa.c\
-			ft_printf/libft/ft_htoa.c\
-			ft_printf/libft/ft_address.c\
-			ft_printf/libft/ft_toupper_h.c\
-			ft_printf/libft/ft_putstr.c\
-			server.c\
+SRC		=	server.c\
 			client.c
 				
 OBJS := $(SRC:.c=.o)
@@ -32,23 +22,27 @@ OBJS := $(SRC:.c=.o)
 all: $(NAME)
 
 .c.o:
-	gcc $(FLAG) -g -c $< -o $(<:.c=.o)
+	gcc $(FLAG) -c $< -o $(<:.c=.o)
 
 $(NAME): $(OBJS)
 	ar -rcs $(NAME) $(OBJS)
+	gcc $(FLAG) client.o -L. -lftminitalk -o client
+	gcc $(FLAG) server.o -L. -lftminitalk -o server
 
 c:	re
-	cc $(FLAG) -g client.o -L. -lftminitalk -o client.out
+	gcc $(FLAG) client.o -L. -lftminitalk -o client
 
 s:	re
-	cc $(FLAG) -g server.o -L. -lftminitalk -o server.out
+	gcc $(FLAG) server.o -L. -lftminitalk -o server
 
 clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) client server
 
 re: fclean all
 
-.PHONY : all clean fclean re
+# make prompt client and server
+
+.PHONY : all clean fclean re s c

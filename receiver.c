@@ -6,7 +6,7 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:28:34 by tkulket           #+#    #+#             */
-/*   Updated: 2023/05/10 22:40:50 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:15:49 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(void)
 	sigaction(SIGUSR2, &sig, NULL);
 	pid = getpid();
 	printf("receiver PID : %d\n", pid);
-	sleep(1);
+//	sleep(1);
 	while (1)
 		pause();
 	return (0);
@@ -43,30 +43,31 @@ void	ft_receive(int signum, siginfo_t *info, void *ucontext)
 	(void)ucontext;
 	if (signum == SIGUSR1)
 	{
-		printf("1 ");
+//		printf("1 ");
 		g_var.c = g_var.c | 1;
-		printf("interval g_var.c  =	%d	", g_var.c);
-		ft_showbit(g_var.c);
-		printf("\n");
+//		printf("interval g_var.c  =	%d	", g_var.c);
+//		ft_showbit(g_var.c);
+//		printf("\n");
 	}
 	else if (signum == SIGUSR2)
 	{
-		printf("0 ");
+//		printf("0 ");
 		g_var.c = g_var.c | 0;
-		printf("interval g_var.c  =	%d	", g_var.c);
-		ft_showbit(g_var.c);
-		printf("\n");
+//		printf("interval g_var.c  =	%d	", g_var.c);
+//		ft_showbit(g_var.c);
+//		printf("\n");
 	}
 	g_var.count++;
 	if (g_var.count == 8)
 	{
-		printf("\n");
-		printf("g_var.c int  = %d\n", g_var.c);
-		printf("g_var.c char = %c\n", g_var.c);
+//		printf("\n");
+//		printf("g_var.c int  = %d\n", g_var.c);
+//		printf("g_var.c char = %c\n", g_var.c);
+		write(1,&g_var.c,1);
 		g_var.count = 0;
 		g_var.c &= 0;
-		printf("\n");
-		printf("receiver PID : %d\n", getpid());
+//		printf("\n");
+//		printf("receiver PID : %d\n", getpid());
 	}
 	else
 		g_var.c = g_var.c << 1;

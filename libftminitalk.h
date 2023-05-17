@@ -6,7 +6,7 @@
 /*   By: tkulket <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:29:19 by tkulket           #+#    #+#             */
-/*   Updated: 2023/05/10 19:36:11 by tkulket          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:45:14 by tkulket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define __LIBFTMINITALK__
 
 # define WAITTIME 500
-
-# include "ft_printf/libftprintf.h"
 
 # include <stdio.h>
 # include <unistd.h>
@@ -33,9 +31,9 @@ typedef	struct s_var
 {
 	char		c;
 	int		count;
-	char	hex;
-	char	*bit;
-	char	*str;
+//	char	hex;
+//	char	*bit;
+//	char	*str;
 }	t_var;
 
 
